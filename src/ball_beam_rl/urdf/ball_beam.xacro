@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<robot name="ball_beam" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- MATERIAIS                     -->
+  
+  <material name="dark_gray">
+    <color rgba="0.25 0.25 0.25 1"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0.05 0.05 0.05 1"/>
+  </material>
+
+  <material name="silver">
+    <color rgba="0.8 0.8 0.8 1"/>
+  </material>
+
+  <!-- BASE FIXA (mundo)            -->
+  <!-- OBRIGATÓRIO: link raiz       -->
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.0125"/>
+      <geometry>
+        <box size="0.15 0.15 0.025"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0125"/>
+      <geometry>
+        <box size="0.15 0.15 0.025"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0"
+               iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- SUPORTE VERTICAL              -->
+
+  <link name="support_link">
+    <visual>
+      <origin xyz="0 0 0.125"/>
+      <geometry>
+        <box size="0.05 0.05 0.25"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.125"/>
+      <geometry>
+        <box size="0.05 0.05 0.25"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0"
+               iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <joint name="support_fixed" type="fixed">
+    <parent link="base_link"/>
+    <child  link="support_link"/>
+    <origin xyz="0 0 0.025"/>
+  </joint>
+
+  <!-- EIXO DO MOTOR                 -->
+
+  <link name="motor_axis_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.015" length="0.08"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.015" length="0.08"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="axis_fixed" type="fixed">
+    <parent link="support_link"/>
+    <child  link="motor_axis_link"/>
+    <origin xyz="0 0 0.25"/>
+  </joint>
+
+  <!-- BARRA (canal onde a bola rola)-->
+
+  <link name="beam_link">
+
+    <!-- Fundo da calha -->
+    <visual name="floor_visual">
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="1.0 0.10 0.01"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision name="floor_collision">
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="1.0 0.10 0.01"/>
+      </geometry>
+    </collision>
+
+    <!-- Parede esquerda (Y+) -->
+    <visual name="left_wall_visual">
+      <origin xyz="0 0.045 0.03"/>
+      <geometry>
+        <box size="1.0 0.01 0.06"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision name="left_wall_collision">
+      <origin xyz="0 0.045 0.03"/>
+      <geometry>
+        <box size="1.0 0.01 0.06"/>
+      </geometry>
+    </collision>
+
+    <!-- Parede direita (Y-) -->
+    <visual name="right_wall_visual">
+      <origin xyz="0 -0.045 0.03"/>
+      <geometry>
+        <box size="1.0 0.01 0.06"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision name="right_wall_collision">
+      <origin xyz="0 -0.045 0.03"/>
+      <geometry>
+        <box size="1.0 0.01 0.06"/>
+      </geometry>
+    </collision>
+
+    <!-- Batente esquerdo -->
+    <visual name="left_stop_visual">
+      <origin xyz="-0.495 0 0.03"/>
+      <geometry>
+        <box size="0.01 0.10 0.06"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+
+    <collision name="left_stop_collision">
+      <origin xyz="-0.495 0 0.03"/>
+      <geometry>
+        <box size="0.01 0.10 0.06"/>
+      </geometry>
+    </collision>
+
+    <!-- Batente direito -->
+    <visual name="right_stop_visual">
+      <origin xyz="0.495 0 0.03"/>
+      <geometry>
+        <box size="0.01 0.10 0.06"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+
+    <collision name="right_stop_collision">
+      <origin xyz="0.495 0 0.03"/>
+      <geometry>
+        <box size="0.01 0.10 0.06"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0"
+               iyy="0.05" iyz="0" izz="0.05"/>
+    </inertial>
+
+  </link>
+
+  <!-- JOINT DA BARRA (revolute)      -->
+  <!-- Eixo Y = inclina X (rola bola) -->
+
+  <joint name="beam_joint" type="revolute">
+    <parent link="motor_axis_link"/>
+    <child  link="beam_link"/>
+    <origin xyz="0 0 0.015"/>   <!-- levanta 1.5 cm p/ bola caber abaixo -->
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.25" upper="0.25"
+           effort="20"  velocity="2.0"/>
+    <dynamics damping="0.2" friction="0.05"/>
+  </joint>
+
+  <!-- ros2_control: actuator da     -->
+  <!-- junta beam_joint              -->
+
+  <ros2_control name="ball_beam_system" type="system">
+
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <joint name="beam_joint">
+    <command_interface name="position">
+        <param name="min">-0.25</param>
+        <param name="max">0.25</param>
+    </command_interface>
+
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+  <!-- Plugin Gazebo para ros2_control -->
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system"
+            name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find ball_beam_rl)/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- Fricção da barra (Gazebo) -->
+
+  <gazebo reference="beam_link">
+    <mu1>0.4</mu1>
+    <mu2>0.4</mu2>
+  </gazebo>
+
+</robot>

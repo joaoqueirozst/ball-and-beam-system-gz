@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="ball">
+
+  <link name="ball_link">
+
+    <visual>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <material name="red">
+        <color rgba="0.8 0.1 0.1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <!-- Bola de borracha ~50g -->
+      <mass value="0.05"/>
+      <!-- I = 2/5 * m * r^2 = 0.4 * 0.05 * 0.0009 = 0.000018 -->
+      <inertia
+        ixx="0.000018" ixy="0" ixz="0"
+        iyy="0.000018" iyz="0"
+        izz="0.000018"/>
+    </inertial>
+
+  </link>
+
+  <!-- Material de contato Gazebo (fricção alta para rolar, não deslizar) -->
+  <gazebo reference="ball_link">
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+    <kp>1e6</kp>
+    <kd>1.0</kd>
+    <minDepth>0.001</minDepth>
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+</robot>

@@ -1,0 +1,22 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    # Controlador de posição da junta beam_joint
+    beam_position_controller:
+      type: forward_command_controller/ForwardCommandController
+
+    # Publicador de estados das juntas (para leitura pelo RL)
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+beam_position_controller:
+  ros__parameters:
+    joints:
+      - beam_joint
+    interface_name: position
+
+joint_state_broadcaster:
+  ros__parameters:
+    joints:
+      - beam_joint
