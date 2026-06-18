@@ -7,8 +7,8 @@
       <geometry>
         <sphere radius="0.03"/>
       </geometry>
-      <material name="red">
-        <color rgba="0.8 0.1 0.1 1"/>
+      <material name="grey">
+        <color rgba="0.25 0.25 0.25 1"/>
       </material>
     </visual>
 
@@ -37,7 +37,7 @@
     <kp>1e6</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
 
 </robot>
