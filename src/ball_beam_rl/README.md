@@ -16,17 +16,17 @@ src/
 │   │   └── controllers.yaml
 │   │
 │   └── launch/
-│   │    └── ball_beam_launch.py
+│   │   └── ball_beam_launch.py
 │   │
 │   └── resource/
-│   │    └── ball_beam_rl
+│   │   └── ball_beam_rl
 │   │
 │   └── urdf/
 │   │   ├── ball.urdf
 │   │   └── ball_beam.xacro
 │   │
 │   └── worlds/
-│   │    └── empty.world
+│   │   └── empty.world
 │   │
 │   ├── package.xml
 │   ├── setup.cfg
@@ -49,7 +49,7 @@ source install/setup.bash
 ros2 launch ball_beam_rl ball_beam.launch.py
 ```
 
-In **terminal 2**, to manually start the node::
+In **terminal 2**, to manually start the node:
 
 ```bash
 ros2 run ball_beam_rl ball_state_node
