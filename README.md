@@ -4,6 +4,10 @@
 
 This project involves building a Ball and Beam system in a gazebo, integrating **ROS** concepts for environment and robot management and construction using the Xacro tool, and editing `.urdf` files.
 
+Associated with this environment, **Deep Reinforcement Learning** algorithms and their techniques for learning the system's policy were also studied. In this case, a **PPO** agent was implemented, as it handles simulations of continuous action spaces better, similar to the reality of physical systems.
+
+The supporting material for this project was primarily the [Stable Baselines3 (SB3)](https://stable-baselines3.readthedocs.io/en/master/) library, which assists in structuring reinforcement learning techniques, and Professor Fábio's lecture materials, which can be viewed in [his repository](https://github.com/fabiobento/cont-int-2026-1).
+
 More informations about Gazebo/Xacro: [Gazebo](https://classic.gazerialsbosim.org/tuto/?tut=ros_urdf).
 
 # Environment
